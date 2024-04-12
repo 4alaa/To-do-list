@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <!-- link of favico -->
+
+    <!-- link of fontawesome -->
+    <link rel="stylesheet" href="Style/all.min.css">
+    <!-- link of bootstrap -->
+    <link rel="stylesheet" href="Style/bootstrap.min.css">
+    <!-- link of css -->
+    <link rel="stylesheet" href="Style/style.css">
+</head>
+<body >
+
+  <header class="shadow-lg fixed-top myNav">
+    <div class="container d-flex align-items-center gap-3 p-3 ">
+      
+      <h1 class="h2 m-0 text-capitalize fw-bold">
+        <a  class="text-decoration-none daily">Daily Task</a>
+      </h1>
+      <div class="input-group flex-nowrap mx-auto">
+        <label class="input-group-text" id="addon-wrapping" for="searchInput"
+          ><i class="fa-solid fa-magnifying-glass"></i></label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Seach Tasks...."
+          aria-label="search"
+          aria-describedby="addon-wrapping"
+          id="searchInput"
+          list="categories"
+        />
+        <datalist id="categories">
+          <option value="Education"></option>
+          <option value="Health && Fitness"></option>
+          <option value="Finance"></option>
+          <option value="Entertainment"></option>
+        </datalist>
+        
+      </div>
+
+
+
+    </div>
+
+  </header>
+
+
+
+    <div class="fixedmodel d-none" id="addForm" >
+
+        <div class="container  d-flex justify-content-center align-items-center vh-100 "  id="fixedmodel"  >
+            <div class="row gap-3">
+                
+
+
+                <div>
+                    <label class="text-white fs-5 text-start">Select Task Status ....</label>
+                    <select name="taskStatus" id="taskStatus"  class="form-control">
+                        <option value="mustDo" selected>Must Do</option>
+                        <option value="shouldDo">Shoud Do</option>
+                        <option value="couldDo">Could Do</option>
+                        <!-- <option value="IfIHaveTime">If I Have time</option> -->
+                    </select>
+                </div>
+                <div>
+                    <label class="text-white fs-5 text-start " >Select Category ....</label>
+                    <select name="taskCategory" id="taskCategory" class="form-control" >
+                        <option value="Education" selected >Education</option>
+                        <option value="Health && Fitness">Health && Fitness</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Entertainment">Entertainment</option>
+                    </select>
+                </div>
+                <div>
+                    <label  class="text-white fs-5 text-start"for="taskTitle">Task Title :</label>
+                    <input type="text" class="form-control" placeholder="Task Title" id="taskTitle"  oninput="validateName()">
+                    <small class="text-danger d-none fs-3">You should start with character and between 1 to 21  any input  </small>
+                </div>
+                <div>
+                    <!-- <label  class="text-white fs-5 text-start"for="TaskDescription">Task Description :</label>
+                    <input type="text" class="form-control" placeholder="Task Description" id="TaskDescription"> -->
+                </div>
+              
+
+                <button class="btn btn-outline-warning mx-auto mt-3 rounded-pill p-3 text-uppercase fw-bold w-25 cavet fs-5 addTask rounded-pill" id="addBtn">Add Task</button>
+
+                <button class="btn btn-outline-success mx-auto mt-3 rounded-pill p-3 text-uppercase fw-bold w-25 cavet fs-5 updateTask rounded-pill d-none" id="updateBtn">update Task</button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <main>
+
+        <nav class="my-5">
+          <div
+            class="container d-sm-flex justify-content-between align-items-center"
+          >
+            <h2 class="h5 m-0 fw-bold allH2">
+              <i class="bi bi-stars"></i> All of tasks
+            </h2>
+            <h4 class="mb-3 text-success totalTasks mt-3" ></h4>
+
+            
+            <div class="d-flex align-items-center gap-3 justify-content-center">
+              
+          <label class="switch" title="dark&&light mood">
+              <input type="checkbox" onclick="toggle_light_mode()">
+              <span class="slider"></span>
+          </label>   
+          <i class="fa-solid fa-bars fa-2x" title="change view of tasks to Bars" onclick="changeToBars()"></i>      
+          <i class="fa-solid fa-chart-simple fa-2x" title="change view of tasks to Columns" onclick="changeToColumns()"></i>
+            </div>
+
+          </div>
+          
+        </nav>
+        
+        <!-- <div class="container">
+          <div class="row">
+
+          </div>
+        </div> -->
+
+        <button class="btn btn-info cavet fs-3 addNewTask rounded-pill p-2 my-3 position-relative start-50 translate-middle-x" >Add new task</button>
+
+  
+        <div class="container columns pb-5">
+          <div class="row g-3 align-items-start">
+            <section class="to-do col-md-6 col-lg-4">
+              <div class="content">
+                <div
+                  class="header d-flex justify-content-between align-items-center py-2 px-3"
+                >
+                  <h2 class="m-0 text-capitalize">Must Do</h2>
+                  <span id="MustCount">0</span>
+                </div>
+                <div class="tasks p-3 " id="must">
+
+
+ 
+              </div>
+            </section>
+  
+            <section class="in-progress col-md-6 col-lg-4">
+              <div class="content">
+                <div
+                  class="header d-flex justify-content-between align-items-center py-2 px-3"
+                >
+                  <h2 class="m-0 text-capitalize">Shoud Do</h2>
+                  <span id="ShoudCount">0</span>
+                </div>
+                <div class="tasks p-3" id="should"></div>
+              </div>
+            </section>
+  
+            <section class="done col-md-6 col-lg-4">
+              <div class="content">
+                <div
+                  class="header d-flex justify-content-between align-items-center py-2 px-3"
+                >
+                  <h2 class="m-0 text-capitalize">Could Do</h2>
+                  <span id="CouldCount">0</span>
+                </div>
+                <div class="tasks p-3" id="could"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+        
+    </main>
+
+
+
+  
+
+    <!-- link of bootstrap js -->
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <!-- link of mine js -->
+    <script src="JS/index.js"></script>
+</body>
+</html>
